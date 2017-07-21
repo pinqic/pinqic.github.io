@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta name="viewport" content="width=device-width">
+    <title>JOOX Music Logo Icon in Pure CSS</title>
+    <style>
+.joox-logo {
+    position: relative;
+    padding: 0;
+    width: 4em;
+    height: 4em;
+    border: solid 2em green;
+    border-radius: 4em;
+    display: inline-block;
+    z-index: 1;
+	user-select: none;
+}
+.joox-logo::before {
+    content: "";
+    position: absolute;
+    bottom: -2em;
+    left: 2.5em;
+    border: 0;
+    border-right-width: 3em;
+    border-bottom-width: 1.5em;
+    border-style: solid;
+    border-color: transparent green;
+    display: block;
+    width: 0;
+    transform: rotateZ(-16deg);
+	user-select: none;
+	pointer-events: none;
+}
+.joox-logo::after {
+    content: "";
+    position: absolute;
+    left: 1.5em;
+    top: 1.5em;
+    width: 1em;
+    height: 1em;
+    background: green;
+    border-radius: 4em;
+    color: #fff;
+	user-select: none;
+	pointer-events: none;
+}
+.joox-logo * {	user-select: none; pointer-events: none; }
+.disc-ring {
+    border: 0 solid #eee;
+    border-width: 0 0.1em 0 0.1em;
+    height: 1.5em;
+    width: 5.6em;
+    border-radius: 3em / 10em;
+    position: absolute;
+    top: 1.24em;
+    left: -0.88em;
+    z-index: 9;
+    transform: rotateZ(-45deg);
+}
+.disc-ring::before {
+	content: "";
+    border: 0 solid #fff;
+    border-width: 0 0.12em 0 0.12em;
+    height: 2em;
+    width: 6.4em;
+    border-radius: 3em / 11em;
+    position: absolute;
+    top: -0.28em;
+    left: -0.52em;
+}
+.disc-ring::after {
+	content: "";
+    border: 0 solid #ddd;
+    border-width: 0 0.08em 0 0.08em;
+    height: 1.1em;
+    width: 4.86em;
+    border-radius: 3em / 9em;
+    position: absolute;
+    top: 0.24em;
+    left: 0.28em;
+}
+
+.loop { animation: logo_ani 3s infinite linear; }
+@keyframes logo_ani { 0%{transform: rotate(0deg)} 100%{transform: rotate(360deg)} }
+
+/* joypad icon */
+.joypad {
+	font-size: 12px;
+	position: relative;
+	display: inline-block;
+	width: 6em; height: 2em;
+	background-color: #f60;
+	border-radius: 2em;
+	user-select: none;
+}
+.joypad::before, .joypad::after {
+	content: "";
+	position: absolute;
+	top: 0; width: 2.5em; height: 3em;
+	background-color: #f60;
+	user-select: none;
+	pointer-events: none;
+}
+.joypad * {	user-select: none; pointer-events: none; }
+.joypad::before { left: 0; border-radius: 4em 8em 8em 4em; }
+.joypad::after { right: 0; border-radius: 8em 4em 4em 8em; }
+.joypad-buttons {
+	position: absolute;
+	color: #fff;
+	font-size: 2.5em;
+	font-weight: bold;
+	left: 0.2em; top: -0.3em;
+}
+.joypad-buttons::before {
+	content: ":";
+	position: absolute;
+	z-index: 1; left: 1.44em; top: .08em;
+	transform: rotate(-90deg);
+}
+.joypad-buttons::after {
+	content: ":";
+	position: absolute;
+	z-index: 1; left: 1.54em;
+}
+.joypad-line {
+	position: absolute;
+	left: 3em;top: -1em;
+	border: solid .1em #f60;
+	width: 1.5em;height: 1em;
+	border-radius: 1em;
+	border-width: 0.1em 0 0 0.1em;
+}
+.joypad-line::after {
+	content: "";
+	border: solid .1em #f60;
+	width: 1em;height: .5em;
+	border-radius: 1em;
+	border-width: 0 0.1em 0.1em 0;
+	position: absolute;
+	left: 1.25em; top: -0.3em;
+}
+.joypad-line::before {
+	content: "";
+	width: .6em;
+	height: .5em;
+	background-color: #f60;
+	position: absolute;
+	left: -0.32em; top: 0.6em;
+}
+	</style>
+  <style>
+body {
+	height: 100%;
+	background-color: #444;
+	color: #fff;
+    padding: 2em;
+}
+a {
+    color: #ccf;
+}
+a:hover {
+    color: #ddf;
+}
+pre {
+    font-size: .6em;
+    padding: 2em;
+    border-radius: 6px;
+    background-color: #333;
+}
+  </style>
+</head>
+<body>
+<h1>Logo and Icon in Pure CSS</h1>
+<p>Developed by Mindon, July 2017 @ShenZhen, China P.R.</p>
+<p>
+    <div class="joox-logo"><div class="disc-ring loop"></div></div>
+</p>
+<h3>超強音樂庫，免費任你聽！ - <a  href="http://joox.com" target="_joox_music_app" title="JOOX.com">JOOX</a></h3>
+<small>
+至美音樂盛餐🎵，僅在 HongKong (HK 中國香港)，Thailand (TH 泰國)，Malaysia (MY 马来西亚 - 大马)，Indonesia (ID 印度尼西亚 - 印尼)，South Africa (ZA 南非) 
+</small>
+<p><a href="http://www.joox.com/d?ref=pc_webDownload_ios_hk" target="_joox_app">JOOX for iOS</a> | <a href="http://www.joox.com/d?ref=pc_webDownload_android" target="_joox_music_app">JOOX for Android</a> | <a href="http://joox.com" target="_joox_music_app">JOOX for Web</a>
+</p>
+  
+  <h2>Pure CSS Code for JOOX Music Logo and It's Animation</h2>
+  <pre>
+.joox-logo { /* by Mindon &lt;mindon@gmail.com&gt; */
+    position: relative;
+    padding: 0;
+    width: 4em;
+    height: 4em;
+    border: solid 2em green;
+    border-radius: 4em;
+    display: inline-block;
+    z-index: 1;
+	user-select: none;
+}
+.joox-logo::before {
+    content: "";
+    position: absolute;
+    bottom: -2em;
+    left: 2.5em;
+    border: 0;
+    border-right-width: 3em;
+    border-bottom-width: 1.5em;
+    border-style: solid;
+    border-color: transparent green;
+    display: block;
+    width: 0;
+    transform: rotateZ(-16deg);
+	user-select: none;
+	pointer-events: none;
+}
+.joox-logo::after {
+    content: "";
+    position: absolute;
+    left: 1.5em;
+    top: 1.5em;
+    width: 1em;
+    height: 1em;
+    background: green;
+    border-radius: 4em;
+    color: #fff;
+	user-select: none;
+	pointer-events: none;
+}
+.joox-logo * {	user-select: none; pointer-events: none; }
+.disc-ring {
+    border: 0 solid #eee;
+    border-width: 0 0.1em 0 0.1em;
+    height: 1.5em;
+    width: 5.6em;
+    border-radius: 3em / 10em;
+    position: absolute;
+    top: 1.24em;
+    left: -0.88em;
+    z-index: 9;
+    transform: rotateZ(-45deg);
+}
+.disc-ring::before {
+	content: "";
+    border: 0 solid #fff;
+    border-width: 0 0.12em 0 0.12em;
+    height: 2em;
+    width: 6.4em;
+    border-radius: 3em / 11em;
+    position: absolute;
+    top: -0.28em;
+    left: -0.52em;
+}
+.disc-ring::after {
+	content: "";
+    border: 0 solid #ddd;
+    border-width: 0 0.08em 0 0.08em;
+    height: 1.1em;
+    width: 4.86em;
+    border-radius: 3em / 9em;
+    position: absolute;
+    top: 0.24em;
+    left: 0.28em;
+}
+
+.loop { animation: logo_ani 3s infinite linear; }
+@keyframes logo_ani { 0%{transform: rotate(0deg)} 100%{transform: rotate(360deg)} }
+    </pre>
+  <h2>Pure CSS Code for Joypad</h2>
+<p>
+    <div class="joypad"><div class="joypad-buttons">+</div><div class="joypad-line"></div></div>
+</p>
+  <pre>
+.joypad { /* by Mindon &lt;mindon@gmail.com&gt; */
+	font-size: 12px;
+	position: relative;
+	display: inline-block;
+	width: 6em; height: 2em;
+	background-color: #f60;
+	border-radius: 2em;
+	user-select: none;
+}
+.joypad::before, .joypad::after {
+	content: "";
+	position: absolute;
+	top: 0; width: 2.5em; height: 3em;
+	background-color: #f60;
+	user-select: none;
+	pointer-events: none;
+}
+.joypad * {	user-select: none; pointer-events: none; }
+.joypad::before { left: 0; border-radius: 4em 8em 8em 4em; }
+.joypad::after { right: 0; border-radius: 8em 4em 4em 8em; }
+.joypad-buttons {
+	position: absolute;
+	color: #fff;
+	font-size: 2.5em;
+	font-weight: bold;
+	left: 0.2em; top: -0.3em;
+}
+.joypad-buttons::before {
+	content: ":";
+	position: absolute;
+	z-index: 1; left: 1.44em; top: .08em;
+	transform: rotate(-90deg);
+}
+.joypad-buttons::after {
+	content: ":";
+	position: absolute;
+	z-index: 1; left: 1.54em;
+}
+.joypad-line {
+	position: absolute;
+	left: 3em;top: -1em;
+	border: solid .1em #f60;
+	width: 1.5em;height: 1em;
+	border-radius: 1em;
+	border-width: 0.1em 0 0 0.1em;
+}
+.joypad-line::after {
+	content: "";
+	border: solid .1em #f60;
+	width: 1em;height: .5em;
+	border-radius: 1em;
+	border-width: 0 0.1em 0.1em 0;
+	position: absolute;
+	left: 1.25em; top: -0.3em;
+}
+.joypad-line::before {
+	content: "";
+	width: .6em;
+	height: .5em;
+	background-color: #f60;
+	position: absolute;
+	left: -0.32em; top: 0.6em;
+}
+  </pre>
+</body>
+</html>
