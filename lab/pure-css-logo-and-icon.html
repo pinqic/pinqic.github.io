@@ -46,7 +46,7 @@
     user-select: none;
     pointer-events: none;
 }
-.joox-logo * {	user-select: none; pointer-events: none; }
+.joox-logo * {  user-select: none; pointer-events: none; }
 .disc-ring {
     border: 0 solid #eee;
     border-width: 0 0.1em 0 0.1em;
@@ -87,75 +87,75 @@
 
 /* joypad icon */
 .joypad {
-	font-size: 12px;
-	position: relative;
-	display: inline-block;
-	width: 6em; height: 2em;
-	background-color: #f60;
-	border-radius: 2em;
-	user-select: none;
+    font-size: 12px;
+    position: relative;
+    display: inline-block;
+    width: 6em; height: 2em;
+    background-color: #f60;
+    border-radius: 2em;
+    user-select: none;
 }
 .joypad::before, .joypad::after {
-	content: "";
-	position: absolute;
-	top: 0; width: 2.5em; height: 3em;
-	background-color: #f60;
-	user-select: none;
-	pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 0; width: 2.5em; height: 3em;
+    background-color: #f60;
+    user-select: none;
+    pointer-events: none;
 }
-.joypad * {	user-select: none; pointer-events: none; }
+.joypad * { user-select: none; pointer-events: none; }
 .joypad::before { left: 0; border-radius: 4em 8em 8em 4em; }
 .joypad::after { right: 0; border-radius: 8em 4em 4em 8em; }
 .joypad-buttons {
-	position: absolute;
-	color: #fff;
-	font-size: 2.5em;
-	font-weight: bold;
-	left: 0.2em; top: -0.3em;
+    position: absolute;
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: bold;
+    left: 0.2em; top: -0.3em;
 }
 .joypad-buttons::before {
-	content: ":";
-	position: absolute;
-	z-index: 1; left: 1.44em; top: .08em;
-	transform: rotate(-90deg);
+    content: ":";
+    position: absolute;
+    z-index: 1; left: 1.44em; top: .08em;
+    transform: rotate(-90deg);
 }
 .joypad-buttons::after {
-	content: ":";
-	position: absolute;
-	z-index: 1; left: 1.54em;
+    content: ":";
+    position: absolute;
+    z-index: 1; left: 1.54em;
 }
 .joypad-line {
-	position: absolute;
-	left: 3em;top: -1em;
-	border: solid .1em #f60;
-	width: 1.5em;height: 1em;
-	border-radius: 1em;
-	border-width: 0.1em 0 0 0.1em;
+    position: absolute;
+    left: 3em;top: -1em;
+    border: solid .1em #f60;
+    width: 1.5em;height: 1em;
+    border-radius: 1em;
+    border-width: 0.1em 0 0 0.1em;
 }
 .joypad-line::after {
-	content: "";
-	border: solid .1em #f60;
-	width: 1em;height: .5em;
-	border-radius: 1em;
-	border-width: 0 0.1em 0.1em 0;
-	position: absolute;
-	left: 1.25em; top: -0.3em;
+    content: "";
+    border: solid .1em #f60;
+    width: 1em;height: .5em;
+    border-radius: 1em;
+    border-width: 0 0.1em 0.1em 0;
+    position: absolute;
+    left: 1.25em; top: -0.3em;
 }
 .joypad-line::before {
-	content: "";
-	width: .6em;
-	height: .5em;
-	background-color: #f60;
-	position: absolute;
-	left: -0.32em; top: 0.6em;
+    content: "";
+    width: .6em;
+    height: .5em;
+    background-color: #f60;
+    position: absolute;
+    left: -0.32em; top: 0.6em;
 }
-	</style>
+    </style>
   <style>
 body {
-	height: 100%;
-	background-color: #444;
-	color: #fff;
-	padding: 2em;
+    height: 100%;
+    background-color: #444;
+    color: #fff;
+    padding: 2em;
 }
 a {
     color: #ccf;
@@ -186,8 +186,12 @@ pre {
 </p>
   
   <h2>Pure CSS Code for JOOX Music Logo and It's Animation</h2>
+  <xmp><div class="joox-logo">
+    <div class="disc-ring loop"></div>
+</div></xmp>
   <pre>
-.joox-logo { /* by Mindon &lt;mindon@gmail.com&gt; */
+/* Mindon CSS Drawing */
+.joox-logo {
     position: relative;
     padding: 0;
     width: 4em;
@@ -196,7 +200,7 @@ pre {
     border-radius: 4em;
     display: inline-block;
     z-index: 1;
-	user-select: none;
+    user-select: none;
 }
 .joox-logo::before {
     content: "";
@@ -211,8 +215,8 @@ pre {
     display: block;
     width: 0;
     transform: rotateZ(-16deg);
-	user-select: none;
-	pointer-events: none;
+    user-select: none;
+    pointer-events: none;
 }
 .joox-logo::after {
     content: "";
@@ -224,10 +228,13 @@ pre {
     background: green;
     border-radius: 4em;
     color: #fff;
-	user-select: none;
-	pointer-events: none;
+    user-select: none;
+    pointer-events: none;
 }
-.joox-logo * {	user-select: none; pointer-events: none; }
+.joox-logo * {
+    user-select: none;
+    pointer-events: none;
+}
 .disc-ring {
     border: 0 solid #eee;
     border-width: 0 0.1em 0 0.1em;
@@ -241,7 +248,7 @@ pre {
     transform: rotateZ(-45deg);
 }
 .disc-ring::before {
-	content: "";
+    content: "";
     border: 0 solid #fff;
     border-width: 0 0.12em 0 0.12em;
     height: 2em;
@@ -252,7 +259,7 @@ pre {
     left: -0.52em;
 }
 .disc-ring::after {
-	content: "";
+    content: "";
     border: 0 solid #ddd;
     border-width: 0 0.08em 0 0.08em;
     height: 1.1em;
@@ -263,76 +270,87 @@ pre {
     left: 0.28em;
 }
 
-.loop { animation: logo_ani 3s infinite linear; }
-@keyframes logo_ani { 0%{transform: rotate(0deg)} 100%{transform: rotate(360deg)} }
+.loop {
+    animation: logo_ani 3s infinite linear;
+}
+@keyframes logo_ani {
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
+}
     </pre>
   <h2>Pure CSS Code for Joypad</h2>
 <p>
     <div class="joypad"><div class="joypad-buttons">+</div><div class="joypad-line"></div></div>
 </p>
+  <xmp><div class="joypad">
+    <div class="joypad-buttons">+</div>
+    <div class="joypad-line"></div>
+</div></xmp>
   <pre>
-.joypad { /* by Mindon &lt;mindon@gmail.com&gt; */
-	font-size: 12px;
-	position: relative;
-	display: inline-block;
-	width: 6em; height: 2em;
-	background-color: #f60;
-	border-radius: 2em;
-	user-select: none;
+/* Mindon CSS Drawing */
+.joypad {
+    font-size: 12px;
+    position: relative;
+    display: inline-block;
+    width: 6em; height: 2em;
+    background-color: #f60;
+    border-radius: 2em;
+    user-select: none;
 }
 .joypad::before, .joypad::after {
-	content: "";
-	position: absolute;
-	top: 0; width: 2.5em; height: 3em;
-	background-color: #f60;
-	user-select: none;
-	pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 0; width: 2.5em; height: 3em;
+    background-color: #f60;
+    user-select: none;
+    pointer-events: none;
 }
-.joypad * {	user-select: none; pointer-events: none; }
+.joypad * { user-select: none; pointer-events: none; }
 .joypad::before { left: 0; border-radius: 4em 8em 8em 4em; }
 .joypad::after { right: 0; border-radius: 8em 4em 4em 8em; }
 .joypad-buttons {
-	position: absolute;
-	color: #fff;
-	font-size: 2.5em;
-	font-weight: bold;
-	left: 0.2em; top: -0.3em;
+    position: absolute;
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: bold;
+    left: 0.2em; top: -0.3em;
 }
 .joypad-buttons::before {
-	content: ":";
-	position: absolute;
-	z-index: 1; left: 1.44em; top: .08em;
-	transform: rotate(-90deg);
+    content: ":";
+    position: absolute;
+    z-index: 1;
+    left: 1.44em; top: .08em;
+    transform: rotate(-90deg);
 }
 .joypad-buttons::after {
-	content: ":";
-	position: absolute;
-	z-index: 1; left: 1.54em;
+    content: ":";
+    position: absolute;
+    z-index: 1; left: 1.54em;
 }
 .joypad-line {
-	position: absolute;
-	left: 3em;top: -1em;
-	border: solid .1em #f60;
-	width: 1.5em;height: 1em;
-	border-radius: 1em;
-	border-width: 0.1em 0 0 0.1em;
+    position: absolute;
+    left: 3em;top: -1em;
+    border: solid .1em #f60;
+    width: 1.5em;height: 1em;
+    border-radius: 1em;
+    border-width: 0.1em 0 0 0.1em;
 }
 .joypad-line::after {
-	content: "";
-	border: solid .1em #f60;
-	width: 1em;height: .5em;
-	border-radius: 1em;
-	border-width: 0 0.1em 0.1em 0;
-	position: absolute;
-	left: 1.25em; top: -0.3em;
+    content: "";
+    border: solid .1em #f60;
+    width: 1em;height: .5em;
+    border-radius: 1em;
+    border-width: 0 0.1em 0.1em 0;
+    position: absolute;
+    left: 1.25em; top: -0.3em;
 }
 .joypad-line::before {
-	content: "";
-	width: .6em;
-	height: .5em;
-	background-color: #f60;
-	position: absolute;
-	left: -0.32em; top: 0.6em;
+    content: "";
+    width: .6em;
+    height: .5em;
+    background-color: #f60;
+    position: absolute;
+    left: -0.32em; top: 0.6em;
 }
   </pre>
 </body>
