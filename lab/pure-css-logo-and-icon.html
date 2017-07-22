@@ -46,7 +46,10 @@
     user-select: none;
     pointer-events: none;
 }
-.joox-logo * {  user-select: none; pointer-events: none; }
+.joox-logo * {
+    user-select: none;
+    pointer-events: none;
+}
 .disc-ring {
     border: 0 solid #eee;
     border-width: 0 0.1em 0 0.1em;
@@ -83,7 +86,10 @@
 }
 
 .loop { animation: logo_ani 3s infinite linear; }
-@keyframes logo_ani { 0%{transform: rotate(0deg)} 100%{transform: rotate(360deg)} }
+@keyframes logo_ani {
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
+}
 
 /* joypad icon */
 .joypad {
@@ -103,9 +109,18 @@
     user-select: none;
     pointer-events: none;
 }
-.joypad * { user-select: none; pointer-events: none; }
-.joypad::before { left: 0; border-radius: 4em 8em 8em 4em; }
-.joypad::after { right: 0; border-radius: 8em 4em 4em 8em; }
+.joypad * {
+    user-select: none;
+    pointer-events: none;
+}
+.joypad::before {
+    left: 0;
+    border-radius: 4em 8em 8em 4em;
+}
+.joypad::after {
+    right: 0;
+    border-radius: 8em 4em 4em 8em;
+}
 .joypad-buttons {
     position: absolute;
     color: #fff;
@@ -116,7 +131,8 @@
 .joypad-buttons::before {
     content: ":";
     position: absolute;
-    z-index: 1; left: 1.44em; top: .08em;
+    z-index: 1;
+    left: 1.44em; top: .08em;
     transform: rotate(-90deg);
 }
 .joypad-buttons::after {
@@ -271,7 +287,7 @@ pre {
 }
 
 .loop {
-    animation: logo_ani 3s infinite linear;
+    animation:logo_ani 3s infinite linear;
 }
 @keyframes logo_ani {
     0%{transform: rotate(0deg)}
@@ -300,14 +316,24 @@ pre {
 .joypad::before, .joypad::after {
     content: "";
     position: absolute;
-    top: 0; width: 2.5em; height: 3em;
+    top: 0;
+    width: 2.5em; height: 3em;
     background-color: #f60;
     user-select: none;
     pointer-events: none;
 }
-.joypad * { user-select: none; pointer-events: none; }
-.joypad::before { left: 0; border-radius: 4em 8em 8em 4em; }
-.joypad::after { right: 0; border-radius: 8em 4em 4em 8em; }
+.joypad * {
+    user-select: none;
+    pointer-events: none;
+}
+.joypad::before {
+    left: 0;
+    border-radius: 4em 8em 8em 4em;
+}
+.joypad::after {
+    right: 0;
+    border-radius: 8em 4em 4em 8em;
+}
 .joypad-buttons {
     position: absolute;
     color: #fff;
