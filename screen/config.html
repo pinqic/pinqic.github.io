@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Author" content="mindon[at]gmail.com from http://mindon.github.io">
+  <title>WeChat Message Screen</title>
+  <script src="scripts/zepto.min.js"></script>
+  <script src="scripts/base64v1_0.js"></script>
+  <style>
+body {
+	text-align: center;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: auto 0;
+}
+body, input {
+	font-family: tahoma,arial,serif;
+	font-size: 11pt;
+}
+
+ul {
+  margin: 1em auto;
+  padding: 2em;
+  list-style: none;
+  max-width: 40em;
+  background-color: rgba(255,255,255, 0.9);
+}
+
+li {
+  text-align: left;
+  margin-bottom: 1em;
+  position: relative;
+}
+
+label {
+  display: inline-block;
+  width: 12em;
+  text-align: right;
+  padding-right: 0.5em;
+}
+
+ul input[type=text] {
+  width: 60%;
+  vertical-align: middle;
+  color: #6666cc;
+}
+
+#bgmode label {
+  width: 5em;
+}
+#bgmode label:nth-of-type(2) {
+  width: 3em;
+}
+#bgmode label:first-child {
+  width: 7em;
+}
+
+.aside label {
+  width: 9em;
+}
+
+fieldset {
+  line-height: 2em;
+  position: relative;
+}
+
+legend {
+  color: #008800;
+  font-weight: bold;
+  padding: 0 1em;
+}
+
+#myurl {
+	width: 66%;
+  color: #6699ff;
+}
+
+#bgcolor-val {
+  width: 4em;
+}
+
+#preview-bgcolor {
+  height: 1.4em;
+  width: 1.4em;
+  display: inline-block;
+  background-color: #f9f9f9;
+  vertical-align: middle;
+  border: 1px solid #000;
+}
+
+#myfontsize {
+  width: 5em;
+}
+
+.preview {
+  position: absolute;
+  right: 8px;
+}
+
+#preview-font {
+  font-size: 30px;
+  text-align: center;
+  height: 100%;
+  line-height: 108px;
+  display: none;
+}
+
+#myca {
+  width: 3em;
+}
+
+#preview-left {
+  width: 50px;
+  height: 80%;
+  position: absolute;
+  left: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #478518;
+  background-position: right center;
+}
+#preview-right {
+  width: 50px;
+  height: 80%;
+  position: absolute;
+  right: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #478518;
+  background-position: left center;
+}
+
+#mystart {
+  font-weight: bold;
+  display: block;
+  padding: 6px;
+  border: 2px outset;
+  width: 12em;
+  margin: 8px auto;
+}
+
+#wrapper {
+  position:relative;
+}
+
+#mypreview {
+  width: 40em;
+  height: 20em;
+}
+
+#wetoken {
+  background-color: #ffff99;
+  color: #ff6600;
+}
+label.required {
+  color: #f30;
+  font-weight: bold;
+}
+
+cite {font-size: 9pt;}
+cite b {color: #f00}
+
+#myhook {width: 100%; text-align:center;}
+  </style>
+ </head>
+ <body>
+<h2>Configure WeChat Screen Style</h2>
+
+<div id="wrapper">
+<p>Preview Window (50%) <a href='#' id="mydemo" target="_wechat_screen" title="Open demo in seperate window">#demo</a></p>
+<iframe frameBorder="0" id="mypreview"></iframe>
+<div>
+<input type="text" id="myurl" value="" readonly>
+<a href='#' id="mystart" target="_wechat_screen" title="Open the WeChat Screen URL">Start to Open</a>
+</div>
+<ul>
+  <li>
+<label>WeChat ID:</label><input type="text" id="weid" value="wescreen"/>
+<div><label class="required">Screen Token:</label><input type="text" id="wetoken" value="736170c6a038e1170081e85e1ac177bb" /></div>
+  </li>
+  <li>
+<div id="preview-font">WeChat</div>
+FontSize: <input type="text" id="myfontsize" value="30" maxlength="3" >px (30 ~ 108), 
+<strong>Message Area</strong> occupies <input type="text" id="myca" value="100" maxlength="3">% screen width
+  </li>
+  <li>
+<fieldset>
+<legend>Animation Style</legend>
+<label for="anib2t">Default( bottom up )</label><input type="radio" name="anistyle" id="anib2t" value="">
+<label for="anit2b">Waterfall( top down )</label><input type="radio" name="anistyle" id="anit2b" value="1" checked>
+</fieldset>
+  </li>
+  <li>
+<fieldset>
+<legend>Top Banner &amp; Footer</legend>
+<label for="mybanner">Show top banner</label><input type="checkbox" id="mybanner" checked> &nbsp; <cite>Height: <b>108px</b></cite>
+<div><label>Customized banner</label><input type="text" id="mybanner-url"></div>
+<label for="myfooter">Show footer</label><input type="checkbox" id="myfooter" checked> &nbsp; <cite>Height: <b>29px</b></cite>
+<div><label>Footer text</label><input type="text" id="myfooter-text" title="quoted *WeChatID* with *"></div>
+<div><label>Footer image</label><input type="text" id="myfooter-url"></div>
+
+</fieldset>
+  </li>
+  <li>
+<fieldset class="aside">
+<legend>Aside Banners</legend>
+<div id="preview-left"></div>
+<div id="preview-right"></div>
+<label for="aside">Enable</label><input type="checkbox" id="aside"> &nbsp; <cite>Width: <b id="aside-width"></b> = <span id="aside-pc">18%</span> x screen-width</cite><br>
+<label for="asleft">Left</label><input type="text" id="asleft"><br>
+<label for="asright">Right</label><input type="text" id="asright"><br>
+<label for="asdefault">Align:: Center</label><input type="radio" name="asalign" id="asdefault" value="" checked>
+<label for="asrelative">Side</label><input type="radio" name="asalign" id="asrelative" value="@">
+
+</fieldset>
+  </li>
+  <li>
+<fieldset>
+<legend> Background Style </legend>
+<label for="bgcolor">Background Color</label><input type="checkbox" id="bgcolor" checked>#<input type="text" id="bgcolor-val" value="f9f9f9"><div id="preview-bgcolor"></div><br>
+<label for="bgimage">Background Image</label><input type="checkbox" id="bgimage"><input type="text" id="bgimage-val"><br>
+<div id="bgmode">
+<label for="bgdefault">Style:: Default</label><input type="radio" name="repeat" id="bgdefault" value='' checked>
+<label for="bgfill">Fill X</label><input type="radio" name="repeat" id="bgfill" value='~'>
+<label for="bgrepeat">Repeat</label><input type="radio" name="repeat" id="bgrepeat" value='@'>
+<label for="bgrepeatx">Repeat X</label><input type="radio" name="repeat" id="bgrepeatx" value='x'>
+<label for="bgrepeaty">Repeat Y</label><input type="radio" name="repeat" id="bgrepeaty" value='y'>
+<br><br>
+<label for="bbcolors" style="width:200px">Banner Background Color</label><input type="text" id="bbcolors-val" value="478518,478518,478518" style="width:200px">
+<div align="center"><small style="color:#666">(top,footer,aside value format <i>FFFFFF</i>, default bbc=478518,478518,478518 )</small></div>
+</div>
+</fieldset>
+  </li>
+  <li>
+<label>QR Code URL:</label><input type="text" id="myqr">
+<div style='display:none'><label>Play Delay (s):</label><input type="text" id="mydelay" value="3"></div>
+  </li>
+  <li>
+<input type="text" id="myhook" placeholder="Hook API for the incomming message">
+  </li>
+</ul>
+</div>
+
+<!-- save & restore -->
+<style>
+#copyRest {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0,0,0,0.6);
+  padding: 4px 0;
+}
+#confCurrent {border: 1px solid #999; border-width: 0 0 1px 0; width: 360px;}
+</style><div id="copyRest"><div>
+<input type="text" id="confCurrent" style="display:none" placeholder="Paste your config data">
+<input type="button" value="Get Current Config" id="getCurrent">
+<input type="button" value="Restore Config" id="setCurrent">
+<input type="button" value="Restore" id="saveCurrent" style="display:none">
+</div></div>
+
+<script type="text/javascript">
+var demo = {
+  'font': 30
+ ,'not': false
+ ,'footer': true
+ ,'waterfall': false
+ ,'aside-enable': false
+ ,'banner-url': 'http://oa.wechat.com/screen/images/banner.png'
+ ,'footer-text': 'Follow WeChat ID: *wescreen* to join us.'
+ ,'aside': 'http://oa.wechat.com/screen/my-wow-2014/images/side_left.png^http://oa.wechat.com/screen/my-wow-2014/images/side_right.png'
+ ,'black': 'f9f9f9'
+ ,'bg-enable': false
+ ,'bg': ''
+ ,'ca': '100'
+};
+
+var tok = '';
+
+function icheck(zob, flag) {
+  if( flag === undefined ) {
+    var v = '';
+    zob.each(function(){
+      if(this.checked)
+        v = this.value;
+    });
+    return v;
+  }
+
+  zob.each(function(){
+    this.checked = flag ? true: false;
+  });
+}
+
+function getScreen() {
+  var d = {};
+  if( !$('#mybanner').get(0).checked ) {
+    d.not = true;
+  }
+  if( $('#myfooter').get(0).checked ) {
+    d.footer = true;
+  } else {
+    d.nof = true;
+  }
+
+  if( $('input[name=anistyle]').get(1).checked ) {
+    d.waterfall = true;
+  }
+
+  d['aside-enable'] = $('#aside').get(0).checked;
+  if( !/^\s*$/.test($('#asleft').val()) || !/^\s*$/.test($('#asright').val()) ) {
+    var v = icheck($('input[name=asalign]'));
+    var l = $('#asleft').val().replace(/^\s+|\s+$/g, '')
+      , r = ($('#asright').val().replace(/^\s+|\s+$/g, '') || '*');
+    d['aside'] = v +$('#asleft').val().replace(/^\s+|\s+$/g, '') +'^' + r;
+  }
+  d['black-enable'] = $('#bgcolor').get(0).checked;
+  if( !/^\s*$/.test($('#bgcolor-val').val()) ) {
+    d.black = $('#bgcolor-val').val().replace(/^\s+|\s+$/g, '');
+  }
+  d['bg-enable'] = $('#bgimage').get(0).checked;
+  if( !/^\s*$/.test($('#bgimage-val').val()) ) {
+    var v = icheck($('input[name=repeat]'));
+    d.bg = v +$('#bgimage-val').val().replace(/^\s+|\s+$/g, '');
+  }
+  var font = parseInt($('#myfontsize').val());
+  if( font && font > 30 && font <=108 ) {
+    d.font = font;
+  } else {
+    $('#myfontsize').val(30);
+  }
+
+  if( d['aside-enable'] ) {
+    if( d.not ) {
+      delete d.not;
+    } else if( $('#mybanner').get(0).checked ) {
+      d.top = true;;
+    }    
+    if( d.nof ) {
+      delete d.nof;
+    }
+  } else if( d.footer ) {
+    delete d.footer;
+  }
+  var ca = parseInt($('#myca').val(), 10);
+  if( ca > 0 && ca < 100 ) {
+    d.ca = ca;
+  }
+
+  if( d.black == 'f9f9f9' ) {
+    delete d.black;
+  } else if(d.black == '000' || d.black == '000000') {
+    d.black = true;
+  }
+
+  if($('#mybanner-url').val()) {
+    d['banner-url'] = $('#mybanner-url').val();
+  }
+  if($('#myfooter-url').val()) {
+    d['footer-url'] = $('#myfooter-url').val();
+  }
+  if($('#myfooter-text').val()) {
+    d['footer-text'] = $('#myfooter-text').val();
+  }
+
+  if($('#bbcolors-val').val()) {
+    d['bbc'] = $('#bbcolors-val').val().replace(/^\s+|\s+$/g, '');
+  }
+
+  if($('#myqr').val()) {
+    d.qr = $('#myqr').val();
+  }
+  if(/^http[s]?:\/\/[\S]+/i.test($('#myhook').val())) {
+    d.api = $('#myhook').val();
+  }
+
+  d.id = $('#weid').val().replace(/^\s+|\s+$/g, '');
+  d.token = $('#wetoken').val().replace(/^\s+|\s+$/g, '');
+
+  if( window.localStorage && window.JSON) {
+    window.localStorage.setItem('wall-config', JSON.stringify( d ) );
+  }
+
+  if( d['banner-url'] && $('#mybanner').get(0).checked ) {
+    d.top = d['banner-url'];
+  }
+  if( $('#myfooter').get(0).checked ) {
+    if(d['footer-text']) {
+      d.footer = d['footer-text'];
+    }
+    if(d['footer-url']) {
+      d.fb = d['footer-url'];
+    }
+  }
+
+  if( d.top == demo['banner-url'] ) {
+    d.top = true;
+    if( !d['aside-enable'] && !d.not ) {
+      delete d.top;
+    }
+  }
+  if( d.footer == demo['footer-text'] ) {
+    d.footer = true;
+    if( !d['aside-enable'] && !d.nof ) {
+      delete d.footer;
+    }
+  }
+
+  var ub = window.location.href.replace(/config\.html[?#]?.*$/, 'index.html')
+    , u = '';
+  for( var k in d ) {
+    if( k.indexOf('-') < 0 ) {
+      if( d[k] === true ) {
+        u += '&' + k;
+      } else if(d[k] && (d[k +'-enable'] === undefined || d[k +'-enable'] === true)) {
+        u += '&' + k +'=' + encodeURIComponent(d[k]);
+      }
+    }
+  }
+  if( tok ) {
+    u += '&tok=' + tok;
+  }
+  $('#myurl').val( ub + (u? '?D=' + B64.encode(u.substr(1)) : '') );
+
+  var u = $('#myurl').val();
+  u += (u.indexOf('?')>0?'&':'?') +Math.random() +'&preview=0.5' +'#demo'
+  $('#mypreview').attr('src', u);
+}
+
+function setScreen(d) {
+  if(d.font) {
+    $('#myfontsize').val( d.font );
+  }
+
+  if( d.id ) {
+    $('#weid').val( d.id );
+  }
+
+  if( d.token ) {
+    $('#wetoken').val( d.token );
+  }
+  if( d.api && /^http[s]?:\/\/[\S]+/i.test(d.api) ) {
+    $('#myhook').val( d.api );
+  }
+
+  icheck($('#mybanner'), d.not || (d['aside-enable'] && !d['top']) ? false: true);
+
+  icheck($('#myfooter'), !d.nof && (d.footer || !d['aside-enable']));
+
+  icheck($('input[name=anistyle]'), false);
+  icheck($('input[name=anistyle]').filter('[value="'+(d.waterfall? 1: '')+'"]'), true);
+
+  icheck($('#aside'), d['aside-enable']);
+
+
+  if( d.aside ) {
+    var u = d.aside;
+    var t = u.charAt(0) == '@' ? '@': '';
+    if( t ) u = u.substr(1);
+    icheck($('input[name=asalign]'), false);
+    icheck($('input[name=asalign]').filter('[value="'+t+'"]'), true);
+    
+    var v = u.split('^');
+    $('#asleft').val(v[0]);
+    $('#asright').val(v[1] == '*' ? '' : v[1]);
+    $('#preview-left').css('background-image', 'url(' + v[0] +')');
+    $('#preview-right').css('background-image', 'url(' + (v[1]=='*'?v[0]:v[1]) +')');
+  }
+
+  icheck($('#bgcolor'), d['black-enable']);
+  if( d.black ) {
+    if( /^#?[0-9a-f]{3}|[0-9a-f]{6}$/.test(d.black) ){
+      $('#bgcolor-val').val( d.black.replace('#', ''));
+    }
+  }
+
+  icheck($('#bgimage'), d['bg-enable']);
+
+  if( d.bg ) {
+    var u = d.bg, v = '';
+    if( /^[XY@~]/i.test(u.charAt(0)) ) {
+      v = u.charAt(0).toLowerCase();
+      u = u.substr(1);
+    }
+    icheck($('input[name=repeat]'), false);
+    icheck($('input[name=repeat]').filter('[value="'+v+'"]'), true);
+    $('#bgimage-val').val( u );
+  }
+
+  $('#myca').val( d.ca || 60 );
+
+  var aspc = (100 - (parseInt(d.ca) || 60))/2 - 2;
+  if( aspc < 0 ) {
+    aspc = 18;
+  }
+
+  $('#aside-pc').html(aspc +'%');
+  $('#aside-width').html( Math.round(aspc*$(window).width()/100) +'px' );
+
+
+  if(d['banner-url']) {
+    $('#mybanner-url').val(d['banner-url']);
+  }
+  if(d['footer-text']) {
+    $('#myfooter-text').val(d['footer-text']);
+  }
+  if(d['footer-url']) {
+    $('#myfooter-url').val(d['footer-url']);
+  }
+  if(d['bbcolors-val']) {
+    $('#bbcolors-val').val(d['bbcolors-val']);
+  }
+  if(d.qr) {
+    $('#myqr').val( d.qr );
+  }
+}
+
+$(window).on('resize', function(){
+  var ca = parseInt($('#myca').val(), 10);
+  if( ca > 0 && ca <= 100 ) {
+    var aspc = (100 - (parseInt(ca) || 60))/2 - 2;
+    if( aspc < 0 ) {
+      aspc = 18;
+    }
+
+    $('#aside-width').html( Math.round(aspc*$(window).width()/100) +'px' );
+  }
+});
+
+function asideUpdate() {
+    var v = icheck($('input[name=asalign]'));
+    if( v == '@' ) {
+      $('#preview-left').css('background-position', 'left center');
+      $('#preview-right').css('background-position', 'right center');
+    } else {
+      $('#preview-left').css('background-position', 'right center');
+      $('#preview-right').css('background-position', 'left center');
+    }
+    var l = $('#asleft').val().replace(/^\s+|\s+$/g, '');
+    $('#preview-left').css('background-image', l ? 'url(' + l +')': 'none');
+    
+    var r = $('#asright').val().replace(/^\s+|\s+$/g, '') || (l ? '*': '');
+    $('#preview-right').css('background-image', r ? 'url(' + (r =='*' ? l: r) +')': 'none');
+}
+
+function bgUpdate() {
+  var bgk = icheck($('input[name=repeat]'));
+  var bgr = {'background-repeat': bgk == '@' ? 'repeat': bgk == 'y' ? 'repeat-y': 'repeat-x'};
+  if( bgk && bgk != '~' ) {
+    bgr['background-size']= 'auto';
+  } else {
+    bgr['background-size']= 'contain';
+  }
+  if( $('#bgimage-val').val() ) {
+    bgr['background-image'] = 'url(' + $('#bgimage-val').val() +')';
+  }
+  bgr['background-color'] = '#' +$('#bgcolor-val').val().replace('#','');
+  $(document.body).css(bgr);
+}
+
+function init(q) {
+  var d = null;
+  if( window.localStorage && window.JSON) {
+    var v = window.localStorage.getItem('wall-config');
+    if( v && v!='{}') {
+      try{d=JSON.parse(v);}catch(e){}
+    }
+  }
+  if(!d) {
+    d = demo;
+  }
+
+  var p = {};
+  if( q ) {
+    var d = q.substr(1).split('&');
+    d.forEach(function(v) {
+        var i = v.indexOf('=');
+        if( i > 0 ) {
+            p[ v.substr(0, i) ] = decodeURIComponent(v.substr(i +1));
+        } else {
+            p[v] = true;
+        }
+    });
+
+    if(p.tok)
+      tok = p.tok;
+    
+    if( p.qr ) {
+      d.qr = p.qr;
+    }
+    if( p.id ) {
+      d.id = p.id;
+    }
+    if( p.token ) {
+      d.token = p.token;
+    }
+
+  }
+  setScreen(d);
+  getScreen();
+
+  if(!p.showURL)
+    $('#myurl').hide();
+}
+
+$(function(){
+  init(window.location.search);
+
+  $('#myfontsize').change(function(){
+    var i = parseInt(this.value);
+    if(i >= 30 && i <= 108 ) {
+      $('#preview-font').css('font-size', i +'px');
+    }
+  });
+
+  $('#aside').click(function(){
+    icheck($('#mybanner'), !this.checked);
+    icheck($('#myfooter'), !this.checked);
+    if(this.checked && $('#myca').val() == '100') {
+      $('#myca').val('60');
+    } else if(!this.checked && $('#myca').val() == '60') {
+      $('#myca').val('100');
+    }
+  });
+
+  $('#bgcolor-val').change(function(){
+    if( /^#?[0-9a-f]{3}|[0-9a-f]{6}$/.test(this.value) ){
+      $('#preview-bgcolor').css('background-color', '#' +this.value.replace(/^\s+|\s+$/g, '').replace('#', ''));
+    }
+  });
+
+  $('input[name=repeat]').click(bgUpdate);
+  $('#bgimage-val').change(bgUpdate);
+
+  $('input[name=asalign]').click(asideUpdate);
+  $('#asleft, #asright').change(asideUpdate);
+
+  $('input[type=checkbox]').click(function(){
+    getScreen();
+  });
+  $('input[type=radio]').click(function(){
+    getScreen();
+  });
+  $('input[type=text]').change(function(){
+    getScreen();
+  });
+
+  var islocal = false;
+  if( window.location.hash == '#local' ) {
+    islocal = true;
+    $('#mydemo, #myurl').hide();
+    $('#mydelay').parent().show();
+    $('#mystart').html('Show Screen').attr('target', '_self');
+  }
+
+  $('#mystart, #mydemo').mouseover(function(){
+    var u = $('#myurl').val();
+    if( this.id == 'mydemo' || islocal ) {
+      u += (u.indexOf('?')>0?'&':'?') +(islocal?'&delay=' + (parseInt($('#mydelay').val())||3):'')
+            +Math.random() + ( islocal ? '#local' : '#demo' );
+    }
+    $(this).attr('href', u);
+  });
+
+
+  $('#confCurrent').blur(function(){
+    if($('#saveCurrent').get(0).style.display != 'none') {
+      return;
+    } 
+    $(this).hide();
+    $('#getCurrent,#setCurrent').show();
+  });
+
+  $('#getCurrent').click(function(){
+    $(this).hide();
+    $('#setCurrent').hide();
+    $('#confCurrent').val(B64.encode(JSON.stringify( window.localStorage && localStorage.getItem('wall-config') || {} ))).show().focus().get(0).select();
+  });
+
+  $('#setCurrent').click(function(){
+    $(this).hide();
+    $('#getCurrent').hide();
+    $('#confCurrent').val('').show().focus();
+    $('#saveCurrent').show();
+  });
+
+  $('#saveCurrent').click(function(){
+    var v = $('#confCurrent').val();
+    if(/^\s*$/.test(v) || v == 'Invalid config data.') {
+      //$('#confCurrent').focus();
+      $(this).hide();
+      $('#confCurrent').hide();
+      $('#getCurrent,#setCurrent').show();
+    } else {
+      if( confirm("Confirm to replace all current screen config?")) {
+        var d = null;
+        try {
+          d = JSON.parse(B64.decode(v));
+        } catch(e){}
+        if( d && window.localStorage ) {
+          localStorage.setItem('wall-config', d);
+          init();
+          $('#confCurrent,#saveCurrent').hide();
+          $('#getCurrent,#setCurrent').show();
+        } else {
+          $('#confCurrent').val('Invalid config data.');
+        }
+      }
+    }
+  });
+
+});
+</script>
+ </body>
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+WeChat: Lucky One
+</title>
+<meta name="author" content="mindon/at/gmail.com" />
+<style>
+#container {
+  width: 426px;
+  height: 204px;
+}
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  width: 426px;
+  height: 204px;
+  background: transparent url(images/slot/background-slot.png) no-repeat center center;
+}
+
+.slot, .face, .loading {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clip {
+  width: 426px;
+  height: 204px;
+  padding: 1px 0;
+  position: relative;
+  background-size: contain;
+  background-repeat: none;
+  background-position: center center;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.avatar {
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+  width: 180px;
+  height: 100%;
+  margin-left: 12px;
+}
+
+.gradient {
+  background: -moz-linear-gradient(top, rgba(105,182,68,0) 5%, rgba(105,182,68,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%,rgba(105,182,68,0)), color-stop(100%,rgba(105,182,68,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(105,182,68,0) 5%,rgba(105,182,68,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(105,182,68,0) 5%,rgba(105,182,68,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(105,182,68,0) 5%,rgba(105,182,68,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(105,182,68,0) 5%,rgba(105,182,68,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0069b644', endColorstr='#ff69b644',GradientType=0 ); /* IE6-9 */
+}
+
+
+.leading {
+  font-size: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.face, .loading {
+  position: relative;
+}
+
+/*
+.face > div {
+  font-size: 81px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+}
+*/
+
+.nickname {
+  position: absolute;
+  right: 12px;
+  top: 0;
+  width: 210px;
+  height: 204px;
+
+  color: #f6db99;
+  font-size: 30px;
+  font-weight: bold;
+
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+
+  display: -webkit-box;
+
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  -moz-box-orient: vertical;
+
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-orient: vertical;
+
+  box-pack: center;
+  box-align: center;
+  box-orient: vertical;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: arial;
+}
+
+body {
+  background: #4F8508 url(images/slot/background.png) no-repeat center center;
+  background-size: contain;
+}
+
+#main {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  display: -webkit-box;
+
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  -moz-box-orient: vertical;
+
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-orient: vertical;
+
+  box-pack: center;
+  box-align: center;
+  box-orient: vertical;
+}
+
+#star {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent url(images/slot/background-star.png) no-repeat center center;
+  background-size: contain;
+  opacity: 0;
+}
+
+#crown {
+  position: absolute;
+  margin-left: -252px;
+  margin-top: -155px;
+  top: 50%;
+  left: 50%;
+  width: 123px;
+  height: 103px;
+  background: transparent url(images/slot/crown.png) no-repeat center center;
+}
+
+@-webkit-keyframes flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0.5;
+  }
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.flash {
+  -webkit-animation-name: flash;
+  animation-name: flash;
+}
+
+.loader {
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+  margin: 27px auto;
+  position: relative;
+  box-sizing: border-box;
+  text-align: center;
+  z-index: 0;
+  text-transform: uppercase;
+}
+
+.loader:before,
+.loader:after {
+  opacity: 0;
+  box-sizing: border-box;
+  content: "\0020";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  border: 5px solid #fff;
+  box-shadow: 0 0 50px #fff, inset 0 0 50px #fff;
+}
+
+.loader:after {
+  z-index: 1;
+  -webkit-animation: gogoloader 2s infinite 1s;
+}
+
+.loader:before {
+  z-index: 2;
+  -webkit-animation: gogoloader 2s infinite;
+}
+
+@-webkit-keyframes gogoloader {
+  0% {
+    -webkit-transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 0;
+  }
+}
+
+#luckList {
+  position: fixed;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  height: 80px;
+  width: 100%;
+  display:-ms-flexbox;
+  -ms-flex-pack:center;
+  -ms-flex-align:center;
+
+  /* Firefox */
+  display:-moz-box;
+  -moz-box-pack:center;
+  -moz-box-align:center;
+
+  /* Safari, Chrome, and Opera */
+  display:-webkit-box;
+  -webkit-box-pack:center;
+  -webkit-box-align:center;
+
+  /* W3C */
+  display:box;
+  box-pack:center;
+  box-align:center;
+}
+
+#luckList .avatar {
+  width: 80px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  margin: 0 3px;
+}
+
+#luckList .avatar > b {
+  width: 96%;
+  font-size: 10pt;
+  color: #000;
+  position: absolute;
+  bottom: 4px;
+  left: 2%;
+  word-break: break-all;
+	text-shadow: 0 0 3px #fff;
+}
+</style>
+
+</head>
+
+ <body><div id="main">
+<div id="container">
+<div class="stage">
+<ul id="list" class="slot">
+<li class="loading">
+  <div class="loader">loading...</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="crown" style="display:none"></div>
+</div> <!-- main -->
+<div id="star"></div>
+<div id="luckList" style="display:none"></div>
+<script src="scripts/template.min.js"></script>
+<script src="scripts/zepto.min.js"></script>
+<script src="emoticons/parser.js"></script>
+
+<script id="tpl-all" type="text/html">
+<li class="face">
+  <div style="font-size: 29pt;font-weight: bold;text-align:center;line-height:206px;color:#fff;">We All Lucky!</div>
+</li>
+</script>
+
+
+<script id="tpl-face" type="text/html">
+<li class="face">
+<div style="position:absolute;top:12px;left:12px;width:180px;height:180px;"><img src="images/slot/lucky.png" width="180" height="180" /></div>
+<div style="position:absolute;top:84px;right:72px;width:94px;height:35px;"><img src="images/slot/start.png" width="94" height="35" /></div>
+</li>
+</script>
+<!-- <li class="face"><div><div>IBG<br/>2014</div></div></li> -->
+
+
+<script id="tpl-clips" type="text/html">
+<%for(i=0; i<list.length; i++){%>
+<li class="clip" uid="<%=list[i].fakeid%>"><div class="wrapper">
+  <div class="avatar" style="background-image: url(<%=list[i].head%>)"></div>
+  <div class="nickname"><div><%=list[i].name%></div></div>
+</div></li>
+<%}%>
+</script>
+<script type="text/javascript">
+// -----
+var we = [], npp = 10, total = 0;
+var dfr = {}, cfr = {};
+var current = {}, currentPN = {}, packsReady = {};
+
+var clipHeight = 206, slotPeriod = 1;
+
+if( !window.console ) {
+  window.console = {log: function(c){alert(c)}};
+}
+
+function demo( n ) {
+  if( n < 30 )
+    n = 30;
+  for(var i =0, imax = n || 268; i < imax; i++) {
+    we.push( {'head':'images/default.png', 'name': emopr('IBGer' +i +' [奋斗] /::)'), 'fakeid': i +':' +Math.random()} );
+    frBuffer.push('<img src="' + we[i].head +'" />');
+  }
+  we.randomize();
+
+  loadAvatars();
+  //
+  total = we.length;
+  if( npp > total / 3 ) {
+    npp = Math.floor(total / 3);
+    slotPeriod = npp * 0.1;
+  }
+}
+
+var oabase = 'http://' + (window.location.host)+  '/cgi-bin/screen';
+// parameters
+var req = (function(q){
+  if( !q )
+    return {}
+  
+  var d = q.substr(1).split('&'), p = {};
+  d.forEach(function(v) {
+    var i = v.indexOf('=');
+    if( i > 0 ) {
+      p[ v.substr(0, i) ] = decodeURIComponent(v.substr(i +1)).replace(/</g, '&#60;').replace(/>/g, '&#62;');
+    } else {
+      p[v] = true;
+    }
+  });
+  return p;
+})(window.location.search);
+
+$(function() {
+  if( req['test'] || req['demo'] || !req['token'] ) {
+    setTimeout(function(){
+      demo( Math.round(512 * Math.random()) );
+    }, 160);
+  } else {
+
+    $.ajax({
+      type: 'GET',
+      url: oabase+  '/lucky_draw/participant/list?token=' +req['token'] +'&z=' + (new Date()).getTime(), //
+      dataType: 'json',
+      timeout: 30000, // 30 seconds
+      success: function(result, status){
+        if( result.ret == 0 && result.data && result.data.length > 0 ) {
+          we = result.data;
+
+          we.randomize();
+          for(var i=0, imax=we.length; i<imax; i++) {
+            if(we[i].name) we[i].name = emopr(we[i].name);
+            frBuffer.push('<img src="' + we[i].head +'" />');
+          }
+
+          total = we.length;
+          if( npp > total / 3 ) {
+            npp = Math.floor(total / 3);
+            slotPeriod = npp * 0.2;
+          }
+
+          loadAvatars();
+          
+        } else {
+          alert('Failed to get list, switching to test mode.');
+          demo();
+        }
+      },
+      error: function(xhr, type){
+        console.log(xhr.status || type);
+        alert('Failed to get list, switching to test mode.');
+        demo();
+      }
+    });
+  }
+
+  $('#star').dblclick(function(){
+    $('#luckList').toggle();
+  });
+});
+
+// shuffle an array
+Array.prototype.randomize = function() {
+  var i = this.length, j, v;
+  while ( --i ) {
+    j = Math.random() * (i + 1) | 0;
+    v = this[i];
+    this[i] = this[j];
+    this[j] = v;
+  }
+  return this;
+};
+
+var theONE = {}, luckyONES = {}, finished = false;
+
+function getCurrIndex(id) {
+  var offset = parseInt($(id).css('-webkit-transform').match(/0px,\s*-?(\d+)px,\s*0px/)[1]);
+  var n = Math.round((offset - (parseInt($(id +' .leading').css('height'))||1) +1)/clipHeight ) + 1; // + leading
+  return n;
+}
+
+function lucky(id) {
+  // get slot result data
+  var d = we.slice(0);
+
+  // filter out those lucky ones
+  var lk = [];
+  if( luckyONES[id] && luckyONES[id].length > 0 ) {
+    var i = d.length -1, outlist = luckyONES[id];
+    while( i > -1 ) {
+      var uid = d[i].fakeid;
+      if( outlist.indexOf( uid ) > -1 ) {
+        lk.push(d.splice(i, 1)[0]);
+      }
+      i -= 1;
+    }
+  }
+
+  if( d.length == 0 ) {
+    console.log('Lucky all!');
+    finished = true;
+    return;
+  }
+
+  var n = getCurrIndex(id); // + leading
+  $(id +' li').slice( n+1 ).remove();
+
+  var chosen = d.randomize().slice(0, Math.min(npp, d.length));
+
+  if( d.length < npp ) {// fill
+    chosen = lk.randomize().slice(0, npp - d.length).concat(chosen);
+  }
+
+  // avoid duplicated display
+  if( $(id +' li').last().attr('uid') == chosen[0].fakeid && chosen.length > 2) {
+    var info = chosen[chosen.length -2];
+    chosen[chosen.length -2] = chosen[0];
+    chosen[0] = info;
+  }
+  theONE[id] = chosen[chosen.length -1];
+
+  // avoid duplicated
+  if( !luckyONES[id] ) {
+    luckyONES[id] = [ theONE[id].fakeid ];
+  } else {
+    luckyONES[id].push( theONE[id].fakeid );
+  }
+
+  $(id).append( template.render('tpl-clips', {list: chosen}) );
+  return theONE[id];
+}
+
+function winner() {
+  $('#star').anim({opacity: 1.0}, 0.5, 'erase-in-out', function(){
+    $('#star').anim({opacity: 0.0}, 0.5, 'erase-in-out', function(){
+      if(!reseted) winner();
+    });
+  });
+  $('#crown').show();
+  /*/
+  $('#crown').show().anim({opacity: 0.8}, 0.3, 'erase-in-out', function(){
+    $('#crown').anim({opacity: 1.0}, 0.2, 'erase-in-out');
+  });
+  //*/
+}
+
+function report(id) {
+  if( !theONE[id] ) {
+    console.log( 'Report to server failed' );
+    window.location.hash = '#failed';
+    return false;
+  }
+  console.log( theONE[id].fakeid, ' = reported' );
+  var one = $(id +' li').last();
+  one.addClass('animated flash');
+  $('#luckList').append('<div class="avatar" style="background-image: '+one.find('.avatar').css('background-image')+'"><b>'+one.find('.nickname > div').html()+'</b></div>');
+  if( !req['no-list'] ) {
+    $('#luckList').show();
+  }
+  winner();
+
+  if( req['token'] ) {
+    $.post(oabase +'/lucky_draw/winner/add', { "fakeid": theONE[id].fakeid, "prize": luckyONES[id].length, token: req['token'] }, function(result){
+      if( !result || result!= 0 ) {
+        console.log( 'Report to server failed' );
+        window.location.hash = '#failed';
+      } else {
+        console.log( 'Lucky ONE(' + (luckyONES[id] ? luckyONES[id].length : 1) + '): ' + [theONE[id].fakeid, theONE[id].name].join(', ') );
+      }
+    }, 'json');
+  } else {
+    console.log( 'DEMO ONLY' );
+  }
+}
+
+function test() {
+  var st = {}, v;
+  for(var i=0; i<20000; i++) {
+    v = lucky('#list');
+    st[v] = st[v] ? st[v] +1 : 1;
+  }
+  console.log( st );
+}
+// ---------------
+
+// init list
+function init(id) {
+  dfr[id] = document.createDocumentFragment();
+  cfr[id] = document.createDocumentFragment();
+  
+  current[id] = 0;
+  currentPN[id] = 0;
+  packsReady[id] = false;
+  delete theONE[id];
+
+  var d = we.slice(0, npp * 3);
+  $(id).anim({'translate3d': '0,0,0'}, 0).html( '<li class="leading"></li>' +template.render('tpl-clips', {list: d}) );
+  setTimeout(function(){
+    slot(id, 'linear');
+  }, 50);
+}
+
+function fill(id, n) {
+  var i = n;
+  while(i-- > 0) {
+    if( dfr[id].firstChild ) {
+      cfr[id].appendChild( dfr[id].firstChild );
+    }
+  }
+  $(id).append( cfr[id] );
+}
+
+function prepare(id, n) {
+
+  var pos = current[id] +n;
+  var ul = $(id)[0];
+  passed(id, npp);
+
+  $(id +' .leading').css('height', (1 + (currentPN[id] * n * clipHeight)) +'px');
+
+  if( theONE[id] ) {
+    return;
+  }
+
+  if( !packsReady[id] ) {
+    var data = we.slice(pos, pos +npp);
+    $(id).append( template.render('tpl-clips', {list: data}) );
+    if( data.length < npp ) {
+      fill(id, npp - data.length);
+    }
+    if( pos +npp >= we.length ) {
+      packsReady[id] = true;
+    }
+  } else {
+    fill(id, npp);
+  }
+}
+
+function passed(id, n) {
+  if( n <= 0 ) return false;
+
+  var k = 0, frag = dfr[id];
+  while( k < n ) {
+    frag.appendChild( $(id +' li').get(1) ); // skip leading
+    k += 1;
+  }
+}
+
+var busying = false;
+function slot(id, anifn) {
+  //var n = 1 + Math.round(Math.random() * we.length * 2 ) % (we.length -1);
+  var fin = anifn === true;
+  var offsetEnd = (currentPN[id] + 1) * npp * clipHeight;
+  if( fin ) {
+    anifn = 'cubic-bezier(0.25,0.6,0.5,0.68)'; //'erase-out'; // 'cubic-bezier(0.25,0.6,0.5,0.68)'
+
+    // using li (+ leading) count to fix final translate3d y
+    var n = Math.floor( (parseInt($(id +' .leading').css('height')) -1) / clipHeight );
+    offsetEnd = ($(id +' li').length -1 + n -1) * clipHeight;
+  }
+
+  busying = true;
+  $(id).anim({'translate3d': '0,-' +offsetEnd +'px,0'}
+    , slotPeriod + (fin ? 1 : 0)
+    , anifn || 'linear'
+    , function() {
+        if( finished ) {
+          face(id);
+          // no more
+          return false;
+        }
+        busying = false;
+        if( fin ) { // terminate
+          return report(id);
+        }
+        current[id] += npp;
+
+        if( current[id] + npp >= we.length ) { // tail
+          prepare(id, npp);
+          
+          if( current[id] >= we.length ) { // reset
+            console.log('restart: ', current[id]);
+            current[id] = 0;
+            currentPN[id] = 1;
+
+            $(id +' .leading').css('height', '1px');
+            $(id).anim({'translate3d': '0,-'+ ( npp * clipHeight )+'px,0'}, 0);
+
+            setTimeout(function() {
+              slot(id, theONE[id] ? true : 'linear');
+            });
+            return;
+          }
+        } else if( packsReady[id] || currentPN[id] % 2 == 1 || current[id] + npp * 2 >= we.length ) {
+          prepare( id, npp );
+        }
+        currentPN[id] += 1;
+        slot(id, theONE[id] ? true : 'linear');
+      }
+    );
+}
+
+var slotStarted = false, reseted = false;
+
+function face(id) {
+  $(id).anim({'translate3d': '0,0,0'}, 0).html(template.render( finished ? 'tpl-all': 'tpl-face'), {});
+  reseted = true;
+  $('#crown').css('opacity', 1).hide();
+}
+
+var frLoader = null;
+var frBuffer = [];
+function preloading(doc) {
+  doc.open();
+  doc.write('<body>' +frBuffer.join('') +'</body>');
+  doc.body.onload = avatarReady;
+  doc.close();
+  frBuffer = null;
+}
+
+function avatarReady() {
+  frLoader.onload = null;
+  frLoader = null;
+  setTimeout(function(){
+    face('#list');
+  }, 500);
+}
+
+function loadAvatars() {
+  frLoader = document.createElement('iframe');
+  frLoader.src="javascript:void(top.preloading(this.document))";
+  frLoader.style.display = 'none';
+  $(document.body).append(frLoader);
+}
+
+$(window).keydown(function(event) {
+  if( event.keyCode == 32 && !finished ) {
+    if( $('#list li').first().hasClass('loading') ) {
+      return false;
+    }
+
+    if( slotStarted ) {
+      lucky('#list');
+      slotStarted = false;
+      reseted = false;
+
+    } else if(!busying && reseted ) {
+      if( we.length < 3 ) {
+        console.log('No enough participates');
+      } else {
+        $('#list li').last().removeClass('animated flash');
+
+        init('#list');
+        slotStarted = true;
+      }
+    } else if( !busying && reseted === false ) {
+      face('#list');
+    }
+  }
+});
+
+</script>
+
+<div style="position:fixed;font-size:9pt;color:rgba(255,255,255,0.3);text-align:center;top:2px;width:100%;">press space-bar to start or stop</div>
+ </body>
+</html>

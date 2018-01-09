@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>WeChat Message Screen</title>
+<link rel="stylesheet" href="csstyle/style-chat.css?20140214c" >
+<style>
+#banner {
+	background-image: url('images/banner.png');
+	height: 108px;
+	z-index: 10;
+}
+#gradient {
+	top: 108px;
+	height: 60px;
+}
+
+#footer {
+	font-size: 18px;
+}
+
+#footer > div {
+	margin-top: 0.1em;
+	text-shadow: 0 0 3px #363;
+}
+
+.mode-left .avatar {
+	background-image: url(images/arrow_left_s.png);
+}
+.mode-right .avatar {
+	background-image: url(images/arrow_right_s.png);
+}
+
+li {
+	margin-bottom: 40px;
+}
+
+.avatar {
+	min-width: 161px;
+	max-width: 161px;
+}
+
+.avatar img {
+    width: 112px;
+	height: 112px;
+}
+
+.nickname {
+	font-size: 19px;
+	font-weight: normal;
+}
+
+.text {
+	font-size: 28px;
+	padding: 20px 30px;
+}
+
+body {
+  background-size: contain;
+}
+
+</style>
+ </head>
+ <body>
+<div id="main">
+<script id="message-text-left" type="text/html">
+<li style="display:<%=display||''%>" class="mode-left">
+<div class="avatar"><img src="<%=headimgurl%>" onerror="srcFail(this)" rel="noreferrer" class="pi" /></div>
+<div class="message">
+	<div class="nickname"><%=nickname%></div>
+	<div class="text bubble"><div><%=content%></div></div>
+</div>
+</li>
+</script>
+<script id="message-text-right" type="text/html">
+<li style="display:<%=display||''%>" class="mode-right">
+<div class="message">
+	<div class="nickname"><%=nickname%></div>
+	<div class="text bubble <%=limit%>"><div><%=content%></div></div>
+</div>
+<div class="avatar"><img src="<%=headimgurl%>" onerror="srcFail(this)" rel="noreferrer" class="pi" /></div>
+</li>
+</script>
+
+<script id="message-image-left" type="text/html">
+<li style="display:<%=display||''%>" class="mode-left no-arrow">
+<div class="avatar"><img src="<%=headimgurl%>" onerror="srcFail(this)" rel="noreferrer" class="pi" /></div>
+<div class="message">
+	<div class="nickname"><%=nickname%></div>
+	<div class="image bubble" style="background-image: url(<%=content%>)"><img src="<%=content%>" style="display:none" onload="adjust(this)" /></div>
+</div>
+</li>
+</script>
+<script id="message-image-right" type="text/html">
+<li style="display:<%=display||''%>" class="mode-right no-arrow">
+<div class="message">
+	<div class="nickname"><%=nickname%></div>
+	<div class="image bubble" style="background-image: url(<%=content%>)"><img src="<%=content%>" style="display:none" onload="adjust(this)" /></div>
+</div>
+<div class="avatar"><img src="<%=headimgurl%>" onerror="srcFail(this)" rel="noreferrer" class="pi" /></div>
+</li>
+</script>
+
+	<div id="banner"></div>
+	<div id="gradient"></div>
+	<div id="thearea">
+	<div id="container">
+    <div id="passed"><div class="backview"></div></div>
+		<ul id="messages" class="pack">
+			<li><div style="margin: 0 auto;"><div style="margin: 16px auto;width:430px;background:#fff;padding:30px;border-radius:32px"><img id="myqrcode" width="430" height="430" rel="noreferrer" class="pi" onerror="var u='images/wechat-logo.png';if(this.src.indexOf(u)<0) this.src=u"/></div></div></li>
+		</ul>
+	</div>
+	</div>
+	<div id="footer">
+<div>Follow WeChat ID: <strong id="myid">wescreen</strong> to join us.</div>
+	</div>
+</div>
+<script src="scripts/zepto.min.js"></script>
+<script src="scripts/zepto-slide-transition.js"></script>
+<script src="scripts/template.min.js"></script>
+<script type="text/javascript">
+var qm = window.location.search.match(/[\?&]id=([\w\-]{3,})/);
+window.wall = {
+	'id': qm && qm[1] || 'wescreen'
+  , 'default': 'query'
+  , 'ws': {uri: 'ws://'+window.location.host+'/cgi-bin/screen/play_msg/socket', wsp: false}
+  , 'query': {'path': '/cgi-bin/screen/play_msg/list'}
+};
+
+$(function(){
+  if(!/[\?&]qr=[^&]+/.test(window.location.search)){
+	  $('#myqrcode').attr('src', 'qrcode/' + wall.id.toLowerCase() +'.jpg');
+  }
+	$('#myid').html(window.wall.id);
+});
+</script>
+<script src="emoticons/parser.js"></script>
+<script src="scripts/base64v1_0.js"></script>
+<script src="scripts/wall.js?20141017"></script>
+ </body>
+</html>

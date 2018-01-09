@@ -1,0 +1,116 @@
+html, body {
+	margin: 0;
+	font-family: Tahoma;
+	font-size: 23pt;
+	background: #000;
+	height: 100%;
+  cursor: default;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+	overflow: hidden;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+}
+li {
+	list-style: none;
+	overflow: hidden;
+	border-radius: 16px;
+	margin: 12px;
+}
+
+.gradient {
+	background: rgb(228,245,252); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(228,245,252,1) 0%, rgba(191,232,249,1) 50%, rgba(159,216,239,1) 51%, rgba(42,176,237,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(228,245,252,1)), color-stop(50%,rgba(191,232,249,1)), color-stop(51%,rgba(159,216,239,1)), color-stop(100%,rgba(42,176,237,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(228,245,252,1) 0%,rgba(191,232,249,1) 50%,rgba(159,216,239,1) 51%,rgba(42,176,237,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(228,245,252,1) 0%,rgba(191,232,249,1) 50%,rgba(159,216,239,1) 51%,rgba(42,176,237,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(228,245,252,1) 0%,rgba(191,232,249,1) 50%,rgba(159,216,239,1) 51%,rgba(42,176,237,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(228,245,252,1) 0%,rgba(191,232,249,1) 50%,rgba(159,216,239,1) 51%,rgba(42,176,237,1) 100%); /* W3C */
+}
+
+#banner {
+	text-align: center;
+	background-color: #478518;
+	background-repeat: no-repeat;
+	background-position: center center;
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	top: 0;
+	height: 137px;
+}
+
+#container {
+	position: absolute;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	top: 0;
+}
+
+#messages {
+	margin-top: 150px;
+}
+
+.avatar {
+	padding: 16px;
+	overflow: hidden;
+	float: left;
+	font-size: 1px;
+}
+
+.avatar img {
+	border-radius: 16px;
+	display: inline;
+	width: 110px;
+	height: 110px;
+}
+
+.message {
+	padding: 16px;
+}
+
+.nickname {
+	font-weight: bold;
+	color: #333;
+}
+
+.from {
+	overflow: hidden;
+	font-size: 1em;
+}
+
+.time {
+	float: right;
+}
+
+.text {
+	font-size: 1.5em;
+	max-height: 2.5em;
+	font-weight: bold;
+	color: #000;
+	word-wrap:break-word;
+	overflow:hidden;
+}
+
+#footer {
+	background: #478518 url('../images/footer.png') no-repeat center center;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 52px;
+	text-align: center;
+	font-size: 30px;
+	color: #f3fae1;
+}
+
+.image img {
+    background-color: #666;
+	min-height: 16em;
+	max-height: 16em;
+	display: inline;
+}
